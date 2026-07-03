@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Buildwright Constructions - Quality Home Construction{% endblock %}
+
+{% block meta_keywords %}home construction, building design, residential construction, Buildwright Constructions, quality homes{% endblock %}
+{% block meta_description %}Welcome to Buildwright Constructions. We specialize in quality home construction, delivering exceptional residential projects with innovative designs and superior craftsmanship.{% endblock %}
+{% block main %}
+<!-- header close -->
+<!-- content begin -->
+<div class="no-bottom no-top zebra" id="content">
+<div id="top"></div>
+<!-- section begin -->
+
+<!-- section close -->
+<!-- Contents -->
+<main class="blog-page style-5">
+   <!-- Add this search bar at the top of your page -->
+   <!-- Start Popular Posts -->
+   <section class="popular-posts pt-5 pb-5 border-bottom brd-gray bg-light">
+      <div class="container">
+         <h2 class="post-sc-title text-center text-uppercase mb-4">Popular Posts</h2>
+      </div>
+   </section>
+   <!-- End Popular Posts -->
+   <!-- Start All News -->
+   <section class="all-news section-padding blog bg-light style-3">
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-lg-10">
+               <!-- Trending Posts -->
+               {% for post in trending_posts_page %}
+               <a href="{% url 'blogpost_detail' slug=post.slug %}">
+                  <div class="card border-0 bg-white rounded-0 border-bottom brd-gray pb-3 mb-3">
+                     <div class="card-1">
+                        <div class="row">
+                           <div class="col-lg-5">
+                              <div class="img img-cover">
+               <a href="{% url 'blogpost_detail' slug=post.slug %}" class="card-title h4 mt-3">
+               <img src="{{ post.image.url }}" class="img-fluid rounded" alt="...">
+               </a>
+               </div>
+               </div>
+               <div class="col-lg-7">
+               <div class="card-body p-0">
+               <small class="d-block date text">
+               <a href="#" class="text-uppercase border-end brd-gray pe-3 me-3 color-blue5 fw-bold">Trending</a>
+               <i class="bi bi-clock me-1"></i>
+               <a href="#" class="op-8">{{ post.date }}</a>
+               </small>
+               <a href="{% url 'blogpost_detail' slug=post.slug %}" class="card-title h4 mt-3">{{ post.title }}</a>
+               <a href="{% url 'blogpost_detail' slug=post.slug %}" class="card-title h4 mt-3">
+               <p class="fs-13px color-666 mt-2">{{ post.content_sort }}</p>
+               </a>
+               <div class="author-comments d-flex small align-items-center justify-content-between op-9 mt-3">
+               <div class="l_side d-flex align-items-center">
+               <span class="icon-10 rounded-circle d-inline-flex justify-content-center align-items-center text-uppercase bg-blue5 p-2 me-2 text-white">A</span>
+               <a href="#" class="text-muted">By {{ post.author }}</a>
+               </div>
+               </div>
+               </div>
+               </div>
+               </div>
+               </div>
+               </div>
+               </a>
+               {% endfor %}
+               <style>
+                  .card-1 {
+                  margin-top: 10px;
+                  box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5);
+                  }
+                  .card-1:hover{
+                  box-shadow: 3px 10px 10px rgba(0,0,0,0.3);
+                  }
+                  .img {
+                  margin: 20px 30px;
+                  width: 75%;
+                  height: 70%;
+                  padding: 10px;
+                  transition: 0.4s;
+                  box-shadow: 15px 10px 24px rgba(0,0,0,0.3);
+                  }
+                  {% comment %} .rounded
+                  {
+                  border-radius: 20%;
+                  } {% endcomment %}
+                  .img img {
+                  width: 100%;
+                  height: 100%;
+                  }
+                  .img:hover {
+                  box-shadow: 2px 10px 20px rgba(0, 0, 0, 0.4);
+                  }
+                  .h4{
+                  font-size: 20px;
+                  font-weight: bold;
+                  color: #0d6efd;
+                  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                  }
+                  .mt-2{
+                  margin: 100px 0;
+                  font-size: 14px;
+                  font-weight: 700;
+                  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                  color: #666;
+                  }
+                  .text-muted{
+                  margin-bottom: 30px;
+                  font-size: 17px;
+                  font-weight: 600;
+                  color:#666!important ;
+                  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                  }
+                  {% comment %} .text {
+                  font-size: 60px;
+                  margin: 30px 0;
+                  line-height: 15px;
+                  font-weight: bold;
+                  } {% endcomment %}
+                  /* Mobile View Styles */
+                  @media (max-width: 767px) {
+                  .card-1{
+                  width: 100%;
+                  height:auto;
+                  overflow: hidden;
+                  }
+                  .img {
+                  width: 100%;
+                  height: auto;
+                  margin: 10px 0;
+                  padding: 5px;
+                  }
+                  .card-body{
+                  text-align: center;
+                  }
+                  }
+               </style>
+               <!-- New Posts -->
+               {% for post in new_posts_page %}
+               <a href="{% url 'blogpost_detail' slug=post.slug %}">
+                  <div class="card border-0 bg-white rounded-0 border-bottom brd-gray pb-3 mb-3">
+                     <div class="card-1">
+                        <div class="row">
+                           <div class="col-lg-5">
+                              <div class="img img-cover">
+               <a href="{% url 'blogpost_detail' slug=post.slug %}" class="card-title h4 mt-3">
+               <img src="{{ post.image.url }}" class="img-fluid rounded" alt="...">
+               </a>
+               </div>
+               </div>
+               <div class="col-lg-7">
+               <div class="card-body p-0">
+               <small class="d-block date text">
+               <a href="#" class="text-uppercase border-end brd-gray pe-3 me-3 color-blue5 fw-bold">New</a>
+               <i class="bi bi-clock me-1"></i>
+               <a href="#" class="op-8">{{ post.date }}</a>
+               </small>
+               <a href="{% url 'blogpost_detail' slug=post.slug %}" class="card-title h4 mt-3">{{ post.title }}</a>
+               <a href="{% url 'blogpost_detail' slug=post.slug %}" class="card-title h4 mt-3">
+               <p class="fs-13px color-666 mt-2">{{ post.content_sort }}</p>
+               </a>
+               <div class="author-comments d-flex small align-items-center justify-content-between op-9 mt-3">
+               <div class="l_side d-flex align-items-center">
+               <span class="icon-10 rounded-circle d-inline-flex justify-content-center align-items-center text-uppercase bg-blue5 p-2 me-2 text-white">A</span>
+               <a href="#" class="text-muted">By {{ post.author }}</a>
+               </div>
+               </div>
+               </div>
+               </div>
+               </div>
+               </div>
+               </div>
+               </a>
+               {% endfor %}
+               <!-- Pagination for New Posts -->
+               <div class="pagination style-5 color-5 justify-content-center mt-4">
+                  {% if new_posts_page.has_previous %}
+                  <a href="?new_page=1" class="page-link">First</a>
+                  <a href="?new_page={{ new_posts_page.previous_page_number }}" class="page-link">Previous</a>
+                  {% endif %}
+                  {% for num in new_posts_page.paginator.page_range %}
+                  {% if new_posts_page.number == num %}
+                  <span class="page-num active">{{ num }}</span>
+                  {% else %}
+                  <a href="?new_page={{ num }}" class="page-link">{{ num }}</a>
+                  {% endif %}
+                  {% endfor %}
+                  {% if new_posts_page.has_next %}
+                  <a href="?new_page={{ new_posts_page.next_page_number }}" class="page-link">Next</a>
+                  <a href="?new_page={{ new_posts_page.paginator.num_pages }}" class="page-link">Last</a>
+                  {% endif %}
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- End All News -->
+</main>
+<!-- End Contents -->
+
+{% endblock main %}

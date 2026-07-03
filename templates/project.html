@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Buildwright Constructions - Quality Home Construction{% endblock %}
+
+{% block meta_keywords %}home construction, building design, residential construction, Buildwright Constructions, quality homes{% endblock %}
+{% block meta_description %}Welcome to Buildwright Constructions. We specialize in quality home construction, delivering exceptional residential projects with innovative designs and superior craftsmanship.{% endblock %}
+{% block main %}
+<main>
+    <article class="article">
+        <header class="article__header">
+            <div class="container">
+                <h1 class="article__heading heading heading--size-large">Projects</h1>
+                <!-- Filter projects-->
+                <div class="article__filter filter">
+                    <button class="filter__item filter__item--active __js_filter-btn" type="button" data-filter="*">all</button>
+                    <button class="filter__item __js_filter-btn" type="button" data-filter=".exterior">exterior</button>
+                    <button class="filter__item __js_filter-btn" type="button" data-filter=".building">building</button>
+                    <button class="filter__item __js_filter-btn" type="button" data-filter=".interior">interior</button>
+                    <button class="filter__item __js_filter-btn" type="button" data-filter=".architecture">architecture</button>
+                </div>
+            </div>
+        </header>
+        <div class="article__main container">
+            <ul class="projects-masonry row __js_projects-grid">
+                {% for project in projects %}
+                <li class="projects-masonry__item col-12 col-md-6 col-xl-4 __js_masonry-item interior">
+                    <a class="card card--small card--masonry" href="{% url 'project_detail' project.slug %}">
+                        <div class="card__image">
+                            {% if project.interior_images.first %}
+                                <img src="{{ project.interior_images.first.image.url }}" alt="{{ project.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="card__content">
+                            <h3 class="card__heading">{{ project.title|linebreaksbr }}</h3>
+                            <div class="card__text">{{ project.description|truncatewords:30 }}</div>
+                            <div class="card__bottom">
+                                <span class="card__link">See project
+                                    <svg width="20" height="20">
+                                        <use xlink:href="#chevron-right"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="projects-masonry__item col-12 col-md-6 col-xl-4 __js_masonry-item architecture">
+                    <a class="card card--small card--masonry" href="{% url 'project_detail' project.slug %}">
+                        <div class="card__image">
+                            {% if project.architecture_images.first %}
+                                <img src="{{ project.architecture_images.first.image.url }}" alt="{{ project.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="card__content">
+                            <h3 class="card__heading">{{ project.title|linebreaksbr }}</h3>
+                            <div class="card__text">{{ project.description|truncatewords:30 }}</div>
+                            <div class="card__bottom">
+                                <span class="card__link">See project
+                                    <svg width="20" height="20">
+                                        <use xlink:href="#chevron-right"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="projects-masonry__item col-12 col-md-6 col-xl-4 __js_masonry-item building">
+                    <a class="card card--small card--masonry" href="{% url 'project_detail' project.slug %}">
+                        <div class="card__image">
+                            {% if project.building_images.first %}
+                                <img src="{{ project.building_images.first.image.url }}" alt="{{ project.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="card__content">
+                            <h3 class="card__heading">{{ project.title|linebreaksbr }}</h3>
+                            <div class="card__text">{{ project.description|truncatewords:30 }}</div>
+                            <div class="card__bottom">
+                                <span class="card__link">See project
+                                    <svg width="20" height="20">
+                                        <use xlink:href="#chevron-right"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="projects-masonry__item col-12 col-md-6 col-xl-4 __js_masonry-item exterior">
+                    <a class="card card--small card--masonry" href="{% url 'project_detail' project.slug %}">
+                        <div class="card__image">
+                            {% with project.exterior_images.first as ext_img %}
+    {% if ext_img and ext_img.image %}
+        <img src="{{ ext_img.image.url }}" alt="{{ project.title }}">
+    {% else %}
+        <img src="{% static 'images/placeholder.jpg' %}" alt="Placeholder">
+    {% endif %}
+{% endwith %}
+
+                        </div>
+                        <div class="card__content">
+                            <h3 class="card__heading">{{ project.title|linebreaksbr }}</h3>
+                            <div class="card__text">{{ project.description|truncatewords:30 }}</div>
+                            <div class="card__bottom">
+                                <span class="card__link">See project
+                                    <svg width="20" height="20">
+                                        <use xlink:href="#chevron-right"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+    </article>
+</main>
+<scriptss>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const filterButtons = document.querySelectorAll('.__js_filter-btn');
+        const masonryItems = document.querySelectorAll('.__js_masonry-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
+                masonryItems.forEach(item => {
+                    if (filter === '*' || item.classList.contains(filter.slice(1))) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                filterButtons.forEach(btn => btn.classList.remove('filter__item--active'));
+                button.classList.add('filter__item--active');
+            });
+        });
+    });
+</script>
+
+</scripts>
+{% endblock main %}
+{% comment %} 
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<main>
+    <article class="article">
+        <header class="article__header">
+            <div class="container">
+                <h1 class="article__heading heading heading--size-large"> All Projects</h1>
+            </div>
+        </header>
+        <div class="article__main container">
+            <ul class="projects-masonry row __js_projects-grid">
+                {% for project in projects %}
+                {% if project.architecture_images.first %}
+                <li class="projects-masonry__item col-12 col-md-6 col-xl-4 __js_masonry-item architecture">
+                    <a class="card card--small card--masonry" href="{% url 'project_detail' project.slug %}">
+                        <div class="card__image">
+                            <img src="{{ project.architecture_images.first.image.url }}" alt="{{ project.title }}">
+                        </div>
+                        <div class="card__content">
+                            <h3 class="card__heading">{{ project.title|linebreaksbr }}</h3>
+                            <div class="card__text">{{ project.description|truncatewords:30 }}</div>
+                            <div class="card__bottom">
+                                <span class="card__link">See project
+                                    <svg width="20" height="20">
+                                        <use xlink:href="#chevron-right"></use>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </article>
+</main>
+{% endblock main %} {% endcomment %}

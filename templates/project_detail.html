@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Buildwright Constructions - Quality Home Construction{% endblock %}
+
+{% block meta_keywords %}home construction, building design, residential construction, Buildwright Constructions, quality homes{% endblock %}
+{% block meta_description %}Welcome to Buildwright Constructions. We specialize in quality home construction, delivering exceptional residential projects with innovative designs and superior craftsmanship.{% endblock %}
+{% block main %}
+<main>
+    <article class="article">
+      <header class="article__header">
+        <div class="container">
+          <h1 class="article__heading heading heading--size-large">{{ project.title }}</h1>
+          {% comment %} <div class="article__header-text">“{{ project.category }}”</div> {% endcomment %}
+        </div>
+      </header>
+      <div class="article__projects-slider projects-slider swiper-container __js_projects-slider">
+        <style>
+            .swiper-container {
+                width: 100%;
+                height: 768px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .swiper-slide {
+                text-align: center;
+            }
+
+            .swiper-slide img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 100%;
+                height: auto;
+            }
+        </style>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+              {% for image in all_images %}
+                <div class="swiper-slide">
+                  <img src="{{ image.image.url }}" alt="{{ project.title }} Image" width="auto" height="auto">
+                </div>
+              {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              var swiper = new Swiper('.swiper-container', {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                centeredSlides: true,
+                autoplay: {
+                  delay: 2000,
+                  disableOnInteraction: false,
+                },
+                pagination: {
+                  el: '.swiper-pagination',
+                  clickable: true,
+                },
+                navigation: {
+                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-button-prev',
+                },
+              });
+            });
+          </script>
+        
+      </div>
+      <div class="article__main container">
+        <ul class="article__project-meta project-meta" data-aos="fade">
+          <li class="project-meta__item">
+            <div class="project-meta__item-title">Client</div>
+            <div class="project-meta__item-text">{{ project.client_name }}</div>
+          </li>
+          <li class="project-meta__item">
+            <div class="project-meta__item-title">Completed</div>
+            <div class="project-meta__item-text">{{ project.completion }}</div>
+          </li>
+          <li class="project-meta__item">
+            <div class="project-meta__item-title">Project type</div>
+            <div class="project-meta__item-text">{{ project.project_type }}</div>
+          </li>
+          {% comment %} <li class="project-meta__item">
+            <div class="project-meta__item-title">Manager</div>
+            <div class="project-meta__item-text">{{ project.manager }}</div>
+          </li> {% endcomment %}
+        </ul>
+        <div class="article__project-designer project-designer row">
+          <div class="project-designer__content col-12 col-md-6 col-lg-8">
+            <div class="project-designer__text">
+              <p data-aos="fade">“{{ project.description }}”</p>
+            </div>
+          </div>
+        </div>
+        <main>
+          <article class="article">
+              <header class="article__header">
+                  <div class="container">
+                      <h1 class="article__heading heading heading--size-large">Images</h1>
+                      <!-- Filter projects-->
+                      <div class="article__filter filter">
+                        <button class="filter__item filter__item--active __js_filter-btn" type="button" data-filter="*">all</button>
+                        <button class="filter__item __js_filter-btn" type="button" data-filter=".exterior">exterior</button>
+                        <button class="filter__item __js_filter-btn" type="button" data-filter=".building">building</button>
+                        <button class="filter__item __js_filter-btn" type="button" data-filter=".interior">interior</button>
+                        <button class="filter__item __js_filter-btn" type="button" data-filter=".architecture">architecture</button>
+                      </div>
+                  </div>
+              </header>
+              <div class="article__main container">
+                  <ul class="projects-masonry row __js_projects-grid">
+                      {% for image in interior_images %}
+                      <li class="projects-masonry__item col-12 col-md-6 col-xl-4 __js_masonry-item interior">
+                          <div class="card card--small card--masonry">
+                              <div class="card__image">
+                                  <img src="{{ image.image.url }}" alt="{{ project.title }}">
+                              </div>
+                          </div>
+                      </li>
+                      {% endfor %}
+                      
+                      {% for image in architecture_images %}
+                      <li class="projects-masonry__item col-12 col-md-6 col-xl-4 __js_masonry-item architecture">
+                          <div class="card card--small card--masonry">
+                              <div class="card__image">
+                                  <img src="{{ image.image.url }}" alt="{{ project.title }}">
+                              </div>
+                          </div>
+                      </li>
+                      {% endfor %}
+                      
+                      {% for image in building_images %}
+                      <li class="projects-masonry__item col-12 col-md-6 col-xl-4 __js_masonry-item building">
+                          <div class="card card--small card--masonry">
+                              <div class="card__image">
+                                  <img src="{{ image.image.url }}" alt="{{ project.title }}">
+                              </div>
+                          </div>
+                      </li>
+                      {% endfor %}
+                      
+                      {% for image in exterior_images %}
+                      <li class="projects-masonry__item col-12 col-md-6 col-xl-4 __js_masonry-item exterior">
+                          <div class="card card--small card--masonry">
+                              <div class="card__image">
+                                  <img src="{{ image.image.url }}" alt="{{ project.title }}">
+                              </div>
+                          </div>
+                      </li>
+                      {% endfor %}
+                  </ul>
+              </div>
+          </article>
+      </main>
+      
+      <!-- Include the JavaScript -->
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              const filterButtons = document.querySelectorAll('.__js_filter-btn');
+              const items = document.querySelectorAll('.__js_masonry-item');
+      
+              filterButtons.forEach(button => {
+                  button.addEventListener('click', () => {
+                      const filter = button.getAttribute('data-filter');
+      
+                      // Remove active class from all buttons
+                      filterButtons.forEach(btn => btn.classList.remove('filter__item--active'));
+                      // Add active class to the clicked button
+                      button.classList.add('filter__item--active');
+      
+                      // Filter items
+                      items.forEach(item => {
+                          if (filter === '*' || item.classList.contains(filter.substring(1))) {
+                              item.style.display = 'block';
+                          } else {
+                              item.style.display = 'none';
+                          }
+                      });
+                  });
+              });
+          });
+      </script>
+      
+      
+        <div class="process">
+          <h2 class="process__heading heading" data-aos="fade">Process:</h2>
+          <img src="{% static 'img/picture/projects/detail/sketch.jpg' %}" srcset="{% static 'img/picture/projects/detail/sketch.jpg' %} 2x" width="1111" height="768" alt="" data-aos="fade">
+          <ul class="process__steps steps">
+            <li class="steps__item" data-aos="fade">
+              <div class="steps__item-title">Come up with a solution</div>
+              <div class="steps__item-text">"Crafting solutions tailored to meet your construction challenges head-on. At BUILDWRIGHT Constructions, we focus on enhancing functionality and maximizing your project's potential."</div>
+            </li>
+            <li class="steps__item" data-aos="fade">
+              <div class="steps__item-title">Planning</div>
+              <div class="steps__item-text">"Meticulous planning is at the heart of every successful project at BUILDWRIGHT Constructions. We design detailed strategies to ensure seamless execution and client satisfaction."</div>
+            </li>
+            <li class="steps__item" data-aos="fade">
+              <div class="steps__item-title">Design</div>
+              <div class="steps__item-text">"Innovative design concepts that elevate your vision. At BUILDWRIGHT Constructions, we blend creativity with practicality to deliver distinctive and functional spaces."</div>
+            </li>
+            <li class="steps__item" data-aos="fade">
+              <div class="steps__item-title">Execution</div>
+              <div class="steps__item-text">"Executing projects with precision and expertise. BUILDWRIGHT Constructions ensures that every detail is meticulously managed for superior quality and timely delivery."</div>
+            </li>
+            <li class="steps__item" data-aos="fade">
+              <div class="steps__item-title">Hand Over</div>
+              <div class="steps__item-text">"Delivering excellence from start to finish. At BUILDWRIGHT Constructions, we prioritize seamless project handovers that exceed expectations and inspire confidence."</div>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </article>
+  </main>
+{% endblock main %}

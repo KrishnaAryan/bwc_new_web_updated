@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Buildwright Constructions - Quality Home Construction{% endblock %}
+
+{% block meta_keywords %}home construction, building design, residential construction, Buildwright Constructions, quality homes{% endblock %}
+{% block meta_description %}Welcome to Buildwright Constructions. We specialize in quality home construction, delivering exceptional residential projects with innovative designs and superior craftsmanship.{% endblock %}
+
+{% block main %}
+
+<main>
+    <article class="article">
+      <header class="article__header">
+        <div class="container">
+          <h1 class="article__heading heading heading--size-large">Services</h1>
+        </div>
+      </header>
+      <div class="article__single-service-image container" data-aos="fade">
+        <img src="{% static 'img/picture/single-services/hero.jpg' %}" srcset="{% static 'img/picture/single-services/hero.jpg' %} 2x" width="1110" height="538" alt="">
+      </div>
+      <div class="article__main article__main--width-small container">
+        <div class="single-service-block">
+            <h2 data-aos="fade">Building Design</h2>
+            <p data-aos="fade">Building design involves meticulous planning and creative vision to shape spaces that harmonize functionality with aesthetic appeal. Every detail, from architectural layouts to interior elements, contributes to creating environments that inspire and endure.</p>
+            <p data-aos="fade">The process of building design integrates innovation with practicality, ensuring each structure not only meets but exceeds the expectations of its occupants and stakeholders. It's about translating ideas into tangible spaces that enhance living and working experiences.</p>
+        </div>
+        <div class="single-service-block" data-aos="fade">
+            <img src="{% static 'img/picture/single-services/drawing.jpg' %}" srcset="{% static 'img/picture/single-services/drawing.jpg' %} 2x" width="730" height="405" alt="">
+        </div>
+        <div class="single-service-block">
+            <h2 data-aos="fade">Construction</h2>
+            <p data-aos="fade">Construction is the art and science of transforming architectural designs into reality. It involves meticulous planning, precise execution, and stringent quality control to ensure projects are completed on time and within budget.</p>
+        </div>
+        <div class="single-service-block">
+            <h2 data-aos="fade">Consultation</h2>
+            <p data-aos="fade">Consultation services provide expert guidance and strategic insights tailored to meet the unique needs of clients. It's about leveraging industry knowledge and experience to navigate challenges and achieve successful project outcomes.</p>
+        </div>
+        <div class="single-service-block">
+            <h2 data-aos="fade">Interiors</h2>
+            <p data-aos="fade">Interior design transforms spaces into functional and aesthetically pleasing environments. It's about enhancing the quality of life by creating settings that promote comfort, productivity, and well-being through thoughtful design.</p>
+        </div>
+        <div class="single-service-block">
+            <h2 data-aos="fade">Real Estate</h2>
+            <p data-aos="fade">Real estate development involves strategic planning and execution of projects that shape communities and meet market demands. It's about creating value through sustainable practices and innovative solutions in property development.</p>
+        </div>
+    </div>
+    
+    </article>
+  </main>
+
+
+
+{% endblock main %}

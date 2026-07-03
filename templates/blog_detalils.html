@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Buildwright Constructions - Quality Home Construction{% endblock %}
+
+{% block meta_keywords %}home construction, building design, residential construction, Buildwright Constructions, quality homes{% endblock %}
+{% block meta_description %}Welcome to Buildwright Constructions. We specialize in quality home construction, delivering exceptional residential projects with innovative designs and superior craftsmanship.{% endblock %}
+
+{% block main %}
+<br><br><br>
+
+<!--Contents-->
+<main class="blog-page style-5">
+
+    <style>
+        .all-news {
+            position: relative;
+        }
+        .img {
+            width: 100%;
+            margin-left: 0;
+            margin-bottom: 80px;
+            display: flex;
+            justify-content: center;
+        }
+        .img img {
+            border-radius: 2%;
+            max-width: 100%;
+            height: auto;
+        }
+        .text {
+            margin: 80px 0;
+        }
+        @media (max-width: 768px) {
+            .img {
+                margin-bottom: 40px;
+            }
+            .text {
+                margin: 40px 0;
+            }
+        }
+    </style>
+
+    <!-- ====== start all-news ====== -->
+    <section class="all-news section-padding pt-50 blog bg-transparent style-3">
+        <div class="container">
+            <div class="blog-details-slider mb-100">
+                <div class="content-card">
+                    <div class="img">
+                        <img src="{{ blog_post.image.url }}" alt="">
+                    </br> </br> </br> </br> </br> </br> </br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="d-flex small align-items-center justify-content-between mb-70 fs-12px">
+                        <div class="l_side d-flex align-items-center">
+                            <a href="#" class="me-3 me-lg-5">
+                            </br> </br> </br> </br> 
+                                <span class="icon-20 rounded-circle d-inline-flex justify-content-center align-items-center text-uppercase bg-main p-1 me-2 text-white">
+                                    a
+                                </span>
+                                <span>
+                                    By {{blog_post.author}}
+                                </span>
+                                <span>
+                                    - {{blog_post.date}}
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="blog-content-info">
+                        <h4 class="fw-bold color-000 lh-4 mb-30">{{blog_post.title}}</h4>
+                        <div class="text mb-10 color-666">
+                            {{blog_post.content | safe}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ====== end all-news ====== -->
+
+    <!-- ====== start Popular Posts ====== -->
+    {% comment %}
+    <section class="popular-posts related Posts section-padding pb-100 bg-gray5">
+        <div class="container">
+            <h5 class="fw-bold text-uppercase mb-50">Related Posts</h5>
+            <div class="related-postes-slider position-relative">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        {% for post in blog %}
+                        <div class="swiper-slide">
+                            <div class="card border-0 bg-transparent rounded-0 p-0 d-block">
+                                <a href="{% url 'blog_details' slug=post.slug %}" class="img radius-7 overflow-hidden img-cover">
+                                    <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+                                </a>
+                                <div class="card-body px-0">
+                                    <small class="d-block date mt-10 fs-10px fw-bold">
+                                        <a href="#" class="text-uppercase border-end brd-gray pe-3 me-3 color-blue5">News</a>
+                                        <i class="bi bi-clock me-1"></i>
+                                        <a href="#" class="op-8">{{ post.date }}</a>
+                                    </small>
+                                    <h5 class="fw-bold mt-10 title">
+                                        <a href="{% url 'blog_details' slug=post.slug %}">{{ post.title }}</a>
+                                    </h5>
+                                    <p class="small mt-2 op-8">{{ post.content_sort }}</p>
+                                    <div class="d-flex small mt-20 align-items-center justify-content-between op-9">
+                                        <div class="l_side d-flex align-items-center">
+                                            <span class="icon-20 rounded-circle d-inline-flex justify-content-center align-items-center text-uppercase bg-main p-1 me-2 text-white">
+                                                a
+                                            </span>
+                                            <a href="#" class="mt-1">
+                                                By {{ post.author }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+    {% endcomment %}
+    <!-- ====== end Popular Posts ====== -->
+
+</main>
+<!--End-Contents-->
+
+{% endblock main %}

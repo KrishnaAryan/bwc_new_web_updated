@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Buildwright Constructions - Quality Home Construction{% endblock %}
+
+{% block main %}
+
+<style>
+:root{
+    --primary:#0d6efd;
+    --dark:#1f2937;
+    --muted:#6b7280;
+    --bg:#f5f7fb;
+    --radius:18px;
+}
+body{background:var(--bg); font-family: system-ui, sans-serif;}
+
+.container{width:90%;max-width:1200px;margin:auto;}
+.page-title{text-align:center;font-size:36px;font-weight:800;margin:40px 0;}
+
+.package-card{
+    background:#fff;
+    border-radius:18px;
+    padding:40px 30px;
+    max-width:720px;
+    margin:auto;
+    text-align:center;
+    box-shadow:0 20px 45px rgba(0,0,0,.08);
+}
+.offer-price{font-size:32px;font-weight:800;color:#0d6efd;margin:15px 0;}
+.view-more-link{
+    background:#0d6efd;color:#fff;padding:16px 36px;
+    border-radius:50px;border:none;font-size:17px;font-weight:700;cursor:pointer;
+}
+
+/* POPUP */
+.popup-form{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+}
+.popup-content{background:#fff;width:90%;max-width:480px;border-radius:20px;overflow:hidden;}
+.popup-header{padding:20px;text-align:center;border-bottom:1px solid #eee;position:relative;}
+.close-btn{position:absolute;right:16px;top:12px;font-size:30px;cursor:pointer;}
+.popup-body{padding:25px;}
+
+/* Steps Handle */
+.form-step{display:none;}
+.form-step.active{display:block;}
+
+label{font-weight:600;margin-bottom:6px;display:block;}
+input,select,textarea{
+    width:100%;padding:14px;border-radius:10px;
+    border:2px solid #e5e7eb;font-size:16px;box-sizing: border-box;
+}
+.next-btn,.submit-btn{
+    margin-top:20px;width:100%;padding:16px;
+    border-radius:14px;border:none;background:#0d6efd;
+    color:#fff;font-size:17px;font-weight:700;cursor:pointer;
+}
+</style>
+
+<div class="container">
+    <h1 class="page-title">{{ packages.name }}</h1>
+    <div class="package-card">
+        <p><s>₹ {{ packages.price }}/Sqft</s></p>
+        <div class="offer-price">₹ {{ packages.offer_price }}/Sqft</div>
+        <ul style="text-align:left">
+            {% for summary in packages.package_summaries.all %}
+            <li>{{ summary.summary }}</li>
+            {% endfor %}
+        </ul>
+        <button class="view-more-link" onclick="openPopup()">Download Now</button>
+    </div>
+</div>
+
+<div class="popup-form" id="popupForm">
+    <div class="popup-content">
+        <div class="popup-header">
+            <h2>Download {{ packages.name }}</h2>
+            <span class="close-btn" onclick="closePopup()">×</span>
+        </div>
+
+        <div class="popup-body">
+            <form method="POST" action="{{ packages.get_absolute_url }}" id="workflowForm">
+                {% csrf_token %}
+
+                <div class="form-step active">
+                    <label>Full Name *</label>
+                    {{ form.name }}
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+
+                <div class="form-step">
+                    <label>Email *</label>
+                    {{ form.email }}
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+
+                <div class="form-step">
+                    <label>Phone *</label>
+                    {{ form.phone }}
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+
+                <div class="form-step">
+                    <label>Looking For</label>
+                    {{ form.looking_for }}
+                    <button type="button" class="next-btn">Next</button>
+                </div>
+
+                <div class="form-step">
+                    <label>Message</label>
+                    {{ form.message }}
+                    <button type="submit" class="submit-btn">Submit & Download</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("workflowForm");
+
+    // NEW TECHNIQUE: Event delegation framework (index control se aazadi)
+    form.addEventListener("click", function(e) {
+        // Sirf jab next-btn click ho tabhi trigger hoga
+        if (e.target.classList.contains("next-btn")) {
+            
+            const currentStep = e.target.closest(".form-step");
+            const input = currentStep.querySelector("input, select, textarea");
+
+            // 1. Validation Logic
+            if (input && !input.value.trim()) {
+                input.focus();
+                return;
+            }
+
+            // Phone specific 10-digit strict check (agar phone field ho)
+            if (input && input.name === 'phone' && input.value.trim().length !== 10) {
+                alert("Please enter a valid 10-digit phone number.");
+                input.focus();
+                return;
+            }
+
+            // 2. DOM Navigation Technique (Find next sibling block)
+            const nextStep = currentStep.nextElementSibling;
+            
+            if (nextStep && nextStep.classList.contains("form-step")) {
+                currentStep.classList.remove("active");
+                nextStep.classList.add("active");
+                
+                // Auto-focus next field safely
+                const nextInput = nextStep.querySelector("input, select, textarea");
+                if (nextInput) setTimeout(() => nextInput.focus(), 100);
+            }
+        }
+    });
+
+    // Handle Enter Key inside inputs to mimic Next button click behavior
+    form.addEventListener("keydown", function(e) {
+        if (e.key === "Enter" && e.target.tagName === "INPUT") {
+            e.preventDefault();
+            const currentStep = e.target.closest(".form-step");
+            const nextBtn = currentStep.querySelector(".next-btn");
+            if (nextBtn) nextBtn.click();
+        }
+    });
+
+    // Global Functions for Popup
+    window.openPopup = function() {
+        document.getElementById("popupForm").style.display = "flex";
+        
+        // Reset form stack on open
+        const allSteps = form.querySelectorAll(".form-step");
+        allSteps.forEach((step, idx) => {
+            step.classList.toggle("active", idx === 0);
+        });
+        setTimeout(() => form.querySelector("input").focus(), 150);
+    };
+
+    window.closePopup = function() {
+        document.getElementById("popupForm").style.display = "none";
+    };
+});
+</script>
+
+{% endblock main %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Buildwright Constructions - Quality Home Construction{% endblock %}
+
+{% block meta_keywords %}home construction, building design, residential construction, Buildwright Constructions, quality homes{% endblock %}
+{% block meta_description %}Welcome to Buildwright Constructions. We specialize in quality home construction, delivering exceptional residential projects with innovative designs and superior craftsmanship.{% endblock %}
+{% block main %}
+        
+      <!-- header close -->
+        <!-- content begin -->
+        <div class="no-bottom no-top zebra" id="content">
+            <div id="top"></div>
+            
+            <!-- section begin -->
+            
+            <!-- section close -->
+            <section class="section_all bg-light" id="about">
+              <div class="container">
+                <div class="container">
+                    <h1 class="text-center">Job Closed</h1>
+                    <p class="text-center">Sorry, the position for {{ job.title }} is no longer open for applications.</p>
+                    <div class="text-center">
+                        <a href="{% url 'job_list' %}" class="btn btn-primary">Back to Job Listings</a>
+                    </div>
+                </div>
+              </div>
+          </section>           
+     
+    
+        {% endblock main %}
