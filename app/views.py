@@ -238,34 +238,61 @@ from .models import Package
 from .forms import PackageDownloadForm
 import mimetypes
 
+from django.shortcuts import get_object_or_404, render
+from django.http import FileResponse, Http404
+import mimetypes
+from .forms import PackageDownloadForm   # Keep your form if needed later
+
+import os
+from django.shortcuts import get_object_or_404, render
+from django.http import FileResponse, Http404
+import mimetypes
+from .forms import PackageDownloadForm
+
 def packagedownload(request, slug):
     packages = get_object_or_404(Package, slug=slug)
-    form = PackageDownloadForm()
 
+    # DIRECT DOWNLOAD
+    if request.GET.get('download'):
+        try:
+            print(f"DEBUG: Package found - {packages.name}")
+            print(f"DEBUG: package_documents field = {packages.package_documents}")
+            
+            if not packages.package_documents:
+                print("ERROR: No file attached in database")
+                raise Http404("No PDF attached to this package.")
+
+            file_path = packages.package_documents.path
+            print(f"DEBUG: File path = {file_path}")
+            
+            if not os.path.exists(file_path):
+                print(f"ERROR: File does not exist at {file_path}")
+                raise Http404(f"File not found on server: {file_path}")
+
+            mime_type, _ = mimetypes.guess_type(file_path)
+            response = FileResponse(
+                open(file_path, 'rb'),
+                content_type=mime_type or 'application/pdf'
+            )
+            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(packages.package_documents.name)}"'
+            return response
+
+        except Exception as e:
+            print(f"Download Error: {e}")
+            raise Http404("Error while downloading the file.")
+
+    # Normal form view (optional)
+    form = PackageDownloadForm()
     if request.method == 'POST':
         form = PackageDownloadForm(request.POST)
         if form.is_valid():
             form.save()
-
-            try:
-                file_path = packages.package_documents.path
-                mime_type, _ = mimetypes.guess_type(file_path)
-
-                response = FileResponse(
-                    open(file_path, 'rb'),
-                    content_type=mime_type
-                )
-                response['Content-Disposition'] = f'attachment; filename="{packages.package_documents.name}"'
-                return response
-
-            except FileNotFoundError:
-                raise Http404("File not found")
+            # You can keep form logic or remove it
 
     return render(request, 'package_download.html', {
         'packages': packages,
         'form': form
     })
-
 from django.shortcuts import render
 
 def privacy_policy(request):
